@@ -3,19 +3,13 @@ import os
 from datetime import datetime
 
 ALPHA_VANTAGE_BASE_URL = "https://www.alphavantage.co/query"
-API_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY', '')
 
-def fetch_monthly_data(symbol):
-
-    if not API_KEY:
-        raise ValueError(
-            "ALPHA_VANTAGE_API_KEY environment variable is not set. "
-        )
+def fetch_monthly_data(api_key, symbol):
     
     params = {
         'function': 'TIME_SERIES_MONTHLY',
         'symbol': symbol,
-        'apikey': API_KEY,
+        'apikey': api_key,
         'outputsize': 'full'
     }
     

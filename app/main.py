@@ -26,9 +26,13 @@ async def get_annual_data(symbol: str, year: int):
         raise HTTPException(status_code=400, detail="Invalid year")
     
     try:
+        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="ALPHA_VANTAGE_API_KEY environment variable is not set.")
+        
         if not data_exists(symbol, year):
             try:
-                api_response = fetch_monthly_data(symbol)
+                api_response = fetch_monthly_data(api_key, symbol)
                 monthly_data = parse_monthly_data(symbol, api_response)
                 
                 if not monthly_data:
