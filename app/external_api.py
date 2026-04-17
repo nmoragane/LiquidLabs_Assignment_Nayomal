@@ -25,7 +25,7 @@ def fetch_monthly_data(api_key, symbol):
         if 'Note' in data:
             raise Exception(f"Alpha Vantage API rate limit: {data['Note']}")
         
-        if 'Time Series (Monthly)' not in data:
+        if 'Monthly Time Series' not in data:
             raise ValueError(f"Invalid response format or symbol '{symbol}' not found")
         
         return data
@@ -38,10 +38,10 @@ def fetch_monthly_data(api_key, symbol):
 def parse_monthly_data(symbol, api_response):
     monthly_data = []
     
-    if 'Time Series (Monthly)' not in api_response:
+    if 'Monthly Time Series' not in api_response:
         return monthly_data
     
-    time_series = api_response['Time Series (Monthly)']
+    time_series = api_response['Monthly Time Series']
     
     for date_str, values in time_series.items():
         try:
